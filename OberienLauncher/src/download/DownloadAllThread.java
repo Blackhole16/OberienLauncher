@@ -1,10 +1,14 @@
+package download;
+
+import view.Launcher;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-class DownloadAllThread extends Thread {
+public class DownloadAllThread extends Thread {
 	private Launcher launcher;
 	private boolean finished = false;
 	
@@ -50,7 +54,12 @@ class DownloadAllThread extends Thread {
 		ArrayList<String> files = new ArrayList<String>();
 		String page = OberienURL.get(s);
 		page = page.substring(page.indexOf("Parent Directory</a>")+20);
-		page = page.substring(page.indexOf("<img"), page.indexOf("<hr></pre>"));
+		int from = page.indexOf("<img");
+		int to = page.indexOf("</table>");
+		if (from < 0 || to < 0) {
+			return new String[0];
+		}
+		page = page.substring(from, to);
 		String[] lines = page.split("\n");
 		for (int i = 0; i < lines.length; i++) {
 			lines[i] = lines[i].substring(lines[i].indexOf("<a href=\"")+9);

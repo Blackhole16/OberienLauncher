@@ -1,4 +1,5 @@
-import java.io.File;
+package download;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -6,7 +7,7 @@ import java.net.URL;
 public class OberienURL {
 
 	public static String get(String s) throws IOException {
-		URL url = new URL("http://oberien.bplaced.net/Oberien/" + s);
+		URL url = new URL("http://oberien.net/download/Oberien/" + s);
 		InputStream is = url.openStream();
 		int i;
 		StringBuffer sb = new StringBuffer();

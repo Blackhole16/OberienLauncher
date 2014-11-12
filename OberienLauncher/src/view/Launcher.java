@@ -1,3 +1,5 @@
+package view;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -10,6 +12,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -26,6 +30,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 
+import download.OberienURL;
+import download.UpdateThread;
+import download.DownloadAllThread;
 
 public class Launcher extends JFrame implements ActionListener {
 	private boolean update;
@@ -45,7 +52,7 @@ public class Launcher extends JFrame implements ActionListener {
 	private UpdateThread updateThread;
 	
 	public Launcher() throws IOException {
-		super("Oberien Launcher");
+		super("Oberien view.Launcher");
 		versions = OberienURL.getVersions();
 		
 		JMenuBar mb = new JMenuBar();
@@ -245,10 +252,23 @@ public class Launcher extends JFrame implements ActionListener {
 	}
 	
 	private void start() {
+		System.out.println("1");
 		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss");
+			File f = new File("Game/logs/cons/");
+			if (!f.exists()) {
+				f.mkdirs();
+			}
+			String time = sdf.format(new Date(System.currentTimeMillis()));
+			File out = new File("Game/logs/cons/" + time + ".log");
+			out.createNewFile();
+//			out = new File("./logs/cons/" + time + ".log");
+
 			ProcessBuilder pb = new ProcessBuilder("java", "-jar", "Oberien.jar");
+			pb.redirectError(ProcessBuilder.Redirect.to(out));
 			pb.directory(new File("Game/"));
 			pb.start();
+			System.out.println("2");
 		} catch (IOException e) {e.printStackTrace();}
 		System.exit(0);
 	}

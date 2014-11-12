@@ -1,10 +1,14 @@
+package download;
+
+import view.Launcher;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-class UpdateThread extends Thread {
+public class UpdateThread extends Thread {
 	private Launcher launcher;
 	private String[] versions;
 	private String clientVersion;
